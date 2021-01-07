@@ -8,9 +8,7 @@ current_block_height = 0
 mempool_hashes = pd.Series()
 mempool_df = pd.DataFrame(columns=['txid', 'fee', 'weight', 'bip125', 'time', 'height', 'confirmed'])
 
-def do_something(sc): 
-    print('called')
-    # do your stuff
+def get_data(sc): 
     global current_block_height
     global rpc
     global mempool_hashes
@@ -78,8 +76,8 @@ def do_something(sc):
             mempool_df.loc[len(mempool_df)] = row
 
     # Call again after 30 seconds
-    s.enter(30, 1, do_something, (sc,))
+    s.enter(30, 1, get_data, (sc,))
 
 # Call after 30 seconds
-s.enter(30, 1, do_something, (s,))
+s.enter(30, 1, get_data, (s,))
 s.run()
